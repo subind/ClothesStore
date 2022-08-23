@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/catalogue"
+        android:icon="@drawable/icon_inactive_catalogue"/>
+
+    <item
+        android:title="@string/wishlist"
+        android:icon="@drawable/icon_inactive_wishlist"/>
+
+    <item
+        android:title="@string/basket"
+        android:icon="@drawable/icon_inactive_basket"/>
+</menu>
