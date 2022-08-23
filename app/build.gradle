@@ -32,11 +32,36 @@ android {
 }
 
 dependencies {
+    def retrofit_version = "2.9.0"
+    def logging_interceptor = "4.9.0"
+    def lifecycle_version = "2.6.0-alpha01"
+    def coroutines = "1.6.4"
+    def picasso = "2.8"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //Http logging interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    //Picasso Image loader
+    implementation "com.squareup.picasso:picasso:$picasso"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
