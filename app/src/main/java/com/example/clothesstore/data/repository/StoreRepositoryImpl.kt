@@ -7,9 +7,9 @@ import com.example.clothesstore.data.network.model.Product
 import com.example.clothesstore.domain.repository.StoreRepository
 import com.example.clothesstore.utils.Resource
 
-class StoreRepositoryImpl(val storeApi: StoreApi) : StoreRepository {
+class StoreRepositoryImpl(private val storeApi: StoreApi) : StoreRepository {
 
-    override suspend fun getStoreData(): LiveData<Resource<List<Product>>> {
+    override suspend fun getStoreProducts(): LiveData<Resource<List<Product>>> {
         val productsLiveData = MutableLiveData<Resource<List<Product>>>()
         try {
             productsLiveData.postValue(Resource.Loading(true))

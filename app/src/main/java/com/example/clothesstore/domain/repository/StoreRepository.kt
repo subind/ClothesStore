@@ -8,6 +8,6 @@ import retrofit2.Response
 
 interface StoreRepository {
 
-    suspend fun getStoreData(): LiveData<Resource<List<Product>>>
+    suspend fun getStoreProducts(): LiveData<Resource<List<Product>>>
 
 }
