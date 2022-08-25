@@ -7,8 +7,9 @@ import com.example.clothesstore.data.network.model.Product
 import com.example.clothesstore.domain.use_case.FetchProducts
 import com.example.clothesstore.utils.Resource
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(private val fetchProductsUseCase: FetchProducts): ViewModel() {
+class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchProducts): ViewModel() {
 
     private val _productsLiveData = MutableLiveData<Resource<List<Product>>>()
     val productsLiveData = _productsLiveData

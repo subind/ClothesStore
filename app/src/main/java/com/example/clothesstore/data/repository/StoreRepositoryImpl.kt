@@ -6,8 +6,9 @@ import com.example.clothesstore.data.network.StoreApi
 import com.example.clothesstore.data.network.model.Product
 import com.example.clothesstore.domain.repository.StoreRepository
 import com.example.clothesstore.utils.Resource
+import javax.inject.Inject
 
-class StoreRepositoryImpl(private val storeApi: StoreApi) : StoreRepository {
+class StoreRepositoryImpl @Inject constructor(private val storeApi: StoreApi) : StoreRepository {
 
     override suspend fun getStoreProducts(): LiveData<Resource<List<Product>>> {
         val productsLiveData = MutableLiveData<Resource<List<Product>>>()
