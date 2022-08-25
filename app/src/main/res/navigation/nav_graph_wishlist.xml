@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_graph_wishlist">
+
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.example.clothesstore.presentation.fragments.wishlist.WishlistFragment"
+        android:label="WishlistFragment" />
+</navigation>

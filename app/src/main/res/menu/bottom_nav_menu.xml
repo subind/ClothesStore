@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/catalogue_fragment"
         android:title="@string/catalogue"
         android:icon="@drawable/icon_inactive_catalogue"/>
 
     <item
+        android:id="@+id/wishlist_fragment"
         android:title="@string/wishlist"
         android:icon="@drawable/icon_inactive_wishlist"/>
 
     <item
+        android:id="@+id/basket_fragment"
         android:title="@string/basket"
         android:icon="@drawable/icon_inactive_basket"/>
 </menu>
