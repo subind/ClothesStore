@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/catalogue_fragment"
-        android:title="@string/catalogue"
+        android:title="@string/catalogue_all_caps"
         android:icon="@drawable/icon_inactive_catalogue"/>
 
     <item
         android:id="@+id/wishlist_fragment"
-        android:title="@string/wishlist"
+        android:title="@string/wishlist_all_caps"
         android:icon="@drawable/icon_inactive_wishlist"/>
 
     <item
         android:id="@+id/basket_fragment"
-        android:title="@string/basket"
+        android:title="@string/basket_all_caps"
         android:icon="@drawable/icon_inactive_basket"/>
 </menu>

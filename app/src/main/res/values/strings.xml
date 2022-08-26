@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">ClothesStore</string>
-    <string name="catalogue">CATALOGUE</string>
-    <string name="wishlist">WISHLIST</string>
-    <string name="basket">BASKET</string>
+    <string name="catalogue_all_caps">CATALOGUE</string>
+    <string name="wishlist_all_caps">WISHLIST</string>
+    <string name="basket_all_caps">BASKET</string>
+    <string name="product_name_placeholder">Product name</string>
+    <string name="price_placeholder">$0.00</string>
+    <string name="catalogue">Catalogue</string>
 </resources>

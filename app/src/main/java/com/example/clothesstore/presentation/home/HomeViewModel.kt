@@ -1,9 +1,10 @@
 package com.example.clothesstore.presentation.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.clothesstore.data.network.model.Product
+import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.domain.use_case.FetchProducts
 import com.example.clothesstore.utils.Resource
 import kotlinx.coroutines.launch
@@ -13,6 +14,7 @@ class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchP
 
     private val _productsLiveData = MutableLiveData<Resource<List<Product>>>()
     val productsLiveData = _productsLiveData
+    private lateinit var products: LiveData<Resource<List<Product>>>
 
     init {
         fetchProducts()
@@ -20,9 +22,16 @@ class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchP
 
     private fun fetchProducts() {
         viewModelScope.launch {
-            val products =  fetchProductsUseCase.fetch()
-            productsLiveData.postValue(products.value)
+            products =  fetchProductsUseCase.fetch()
+            products.observeForever {
+                productsLiveData.value = it
+            }
         }
     }
+
+    /*override fun onCleared() {
+        super.onCleared()
+        products.removeObserver()
+    }*/
 
 }

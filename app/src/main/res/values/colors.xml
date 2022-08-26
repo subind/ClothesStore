@@ -10,4 +10,9 @@
 
     <color name="inactive">#888C8C</color>
     <color name="active">#f05d6f</color>
+    <color name="divider">#d7d5cf</color>
+    <color name="background">#ecebe7</color>
+    <color name="item_bg_product">#fffffe</color>
+    <color name="item_background">#ebeae4</color>
+    <color name="tv_title">#df5966</color>
 </resources>

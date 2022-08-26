@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/item_bg_product"
+    app:cardElevation="@dimen/cv_product_elevation"
+    app:cardCornerRadius="@dimen/cv_product_corner_radius"
+    android:layout_marginTop="@dimen/cv_product_top_margin"
+    android:layout_marginBottom="@dimen/cv_product_bottom_margin"
+    android:layout_marginStart="@dimen/cv_product_start_margin">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            tools:src="@tools:sample/avatars"
+            android:id="@+id/iv_product"
+            style="@style/iv_product_style"
+            android:layout_marginStart="@dimen/iv_product_start_margin"
+            android:layout_marginTop="@dimen/iv_product_top_margin"
+            android:layout_marginEnd="@dimen/iv_product_end_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            style="@style/tv_product_name_style"
+            tools:text="@string/product_name_placeholder"
+            android:layout_marginStart="@dimen/tv_product_name_start_margin"
+            android:layout_marginTop="@dimen/tv_product_name_top_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_product" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            style="@style/tv_product_price_style"
+            tools:text="@string/price_placeholder"
+            app:layout_constraintStart_toStartOf="@+id/tv_product_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/tv_product_name_top_margin"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -3,7 +3,7 @@ package com.example.clothesstore.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.clothesstore.data.network.StoreApi
-import com.example.clothesstore.data.network.model.Product
+import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.domain.repository.StoreRepository
 import com.example.clothesstore.utils.Resource
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class StoreRepositoryImpl @Inject constructor(private val storeApi: StoreApi) : 
             val response = storeApi.getStoreData()
             productsLiveData.postValue(Resource.Loading(false))
             if (response.isSuccessful) {
-                val products = response.body()?.products
+                val products = response.body()?.products?.map { it.toProduct() }
                 productsLiveData.postValue(Resource.Success(products))
             } else {
                 productsLiveData.postValue(Resource.Error(response.message()))

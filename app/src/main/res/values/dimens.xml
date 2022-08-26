@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="iv_product_width">120dp</dimen>
+    <dimen name="iv_product_height">150dp</dimen>
+
+    <dimen name="iv_product_top_margin">15dp</dimen>
+    <dimen name="iv_product_end_margin">15dp</dimen>
+    <dimen name="iv_product_start_margin">15dp</dimen>
+
+    <dimen name="tv_product_name_start_margin">15dp</dimen>
+    <dimen name="tv_product_name_top_margin">10dp</dimen>
+
+    <dimen name="tv_product_price_top_margin">15dp</dimen>
+    <dimen name="tv_product_price_bottom_margin">10dp</dimen>
+
+    <dimen name="cv_product_elevation">10dp</dimen>
+    <dimen name="cv_product_corner_radius">10dp</dimen>
+    <dimen name="cv_product_top_margin">15dp</dimen>
+    <dimen name="cv_product_bottom_margin">15dp</dimen>
+    <dimen name="cv_product_start_margin">10dp</dimen>
+
+</resources>
