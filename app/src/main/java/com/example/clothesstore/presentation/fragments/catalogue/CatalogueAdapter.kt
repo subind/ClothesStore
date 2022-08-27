@@ -5,46 +5,63 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.utils.loadImageUsingUrl
 
-class CatalogueAdapter(products: MutableList<Product>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CatalogueAdapter(products: MutableList<Product>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var products: List<Product>
+    var onItemClick: ((Product) -> Unit)? = null
 
     init {
         this.products = products.apply {
-            products.add(0, Product(viewHolderType = Product.TITLE_SECTION, viewHolderTitle = "Catalogue"))
+            products.add(
+                0,
+                Product(viewHolderType = Product.TITLE_SECTION, viewHolderTitle = "Catalogue")
+            )
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when(viewType){
+        return when (viewType) {
             Product.TITLE_SECTION -> {
-                return TitleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false))
+                TitleViewHolder(
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false)
+                )
             }
-            Product.BODY_SECTION-> {
-                return ProductViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false))
+            Product.BODY_SECTION -> {
+                ProductViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_product, parent, false)
+                )
             }
             else -> {
-                return ProductViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false))
+                ProductViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_product, parent, false)
+                )
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val row = products[position]
-        when(holder){
+        when (holder) {
             is TitleViewHolder -> {
                 holder.tvTitle.text = row.viewHolderTitle
             }
             is ProductViewHolder -> {
                 holder.apply {
+                    ivProduct.loadImageUsingUrl(row.image ?: "")
                     tvProductName.text = row.name
                     tvProductPrice.text = row.price.toString()
-                    ivProduct.loadImageUsingUrl(row.image ?: "")
+                    cvProduct.setOnClickListener {
+                        onItemClick?.invoke(row)
+                    }
                 }
             }
         }
@@ -55,13 +72,14 @@ class CatalogueAdapter(products: MutableList<Product>): RecyclerView.Adapter<Rec
 
     override fun getItemCount() = products.size
 
-    class ProductViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val tvProductName = itemView.findViewById<TextView>(R.id.tv_product_name)
         internal val tvProductPrice = itemView.findViewById<TextView>(R.id.tv_product_price)
         internal val ivProduct = itemView.findViewById<ImageView>(R.id.iv_product)
+        internal val cvProduct = itemView.findViewById<CardView>(R.id.cv_product)
     }
 
-    class TitleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class TitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
     }
 

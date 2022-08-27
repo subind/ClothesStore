@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.MyApplication
@@ -77,6 +78,10 @@ class CatalogueFragment : Fragment() {
         }
         rvProducts.layoutManager = layoutManager
         rvProducts.adapter = adapter
+        adapter.onItemClick = { product ->
+            findNavController().navigate(R.id.productBottomSheetDialog)
+            Log.i(TAG, "initRvProducts: ${product.name}")
+        }
     }
 
     private fun initObservers() {

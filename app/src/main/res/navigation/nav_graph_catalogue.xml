@@ -8,4 +8,9 @@
         android:id="@+id/catalogueFragment"
         android:name="com.example.clothesstore.presentation.fragments.catalogue.CatalogueFragment"
         android:label="CatalogueFragment" />
+
+    <dialog
+        android:id="@+id/productBottomSheetDialog"
+        android:name="com.example.clothesstore.presentation.fragments.product.ProductBottomSheetFragment"/>
+
 </navigation>

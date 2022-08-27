@@ -9,7 +9,8 @@
     app:cardCornerRadius="@dimen/cv_product_corner_radius"
     android:layout_marginTop="@dimen/cv_product_top_margin"
     android:layout_marginBottom="@dimen/cv_product_bottom_margin"
-    android:layout_marginStart="@dimen/cv_product_start_margin">
+    android:layout_marginStart="@dimen/cv_product_start_margin"
+    android:id="@+id/cv_product">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

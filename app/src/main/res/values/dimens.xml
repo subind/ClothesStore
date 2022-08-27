@@ -20,4 +20,6 @@
     <dimen name="cv_product_bottom_margin">15dp</dimen>
     <dimen name="cv_product_start_margin">10dp</dimen>
 
+    <dimen name="btn_corner_radius">50dp</dimen>
+
 </resources>
