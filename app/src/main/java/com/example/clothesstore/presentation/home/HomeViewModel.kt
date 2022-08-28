@@ -12,9 +12,12 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchProducts): ViewModel() {
 
+    private lateinit var products: LiveData<Resource<List<Product>>>
+
     private val _productsLiveData = MutableLiveData<Resource<List<Product>>>()
     val productsLiveData = _productsLiveData
-    private lateinit var products: LiveData<Resource<List<Product>>>
+
+    private val wishListLiveData = mutableListOf<Product>()
 
     init {
         fetchProducts()
@@ -29,9 +32,8 @@ class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchP
         }
     }
 
-    /*override fun onCleared() {
-        super.onCleared()
-        products.removeObserver()
-    }*/
+    fun setWishListLiveData(wishedProduct: Product) {
+        wishListLiveData.add(wishedProduct)
+    }
 
 }

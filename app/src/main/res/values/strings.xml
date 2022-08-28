@@ -7,4 +7,5 @@
     <string name="price_placeholder">$0.00</string>
     <string name="catalogue">Catalogue</string>
     <string name="navArgProductDetail">navArgProductDetail</string>
+    <string name="empty_wishlist">Add products to your \'Wishlist\'</string>
 </resources>

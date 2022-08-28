@@ -1,19 +1,28 @@
 package com.example.clothesstore.presentation.fragments.product
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
+import com.example.clothesstore.presentation.fragments.catalogue.CatalogueFragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlin.math.roundToInt
 
-class ProductDetailBottomSheetFragment: BottomSheetDialogFragment() {
+class ProductDetailBottomSheetFragment: BottomSheetDialogFragment(), View.OnClickListener {
 
     private lateinit var rvProductDetails: RecyclerView
+    private lateinit var ivClose: ImageView
+    private lateinit var btnWishlist: Button
+    private lateinit var product: Product
     private val args by navArgs<ProductDetailBottomSheetFragmentArgs>()
 
     override fun onCreateView(
@@ -31,15 +40,39 @@ class ProductDetailBottomSheetFragment: BottomSheetDialogFragment() {
     }
 
     private fun initUi(view: View) {
+        btnWishlist = view.findViewById(R.id.btn_wishlist)
+        btnWishlist.setOnClickListener(this)
+        ivClose = view.findViewById(R.id.iv_close)
+        ivClose.setOnClickListener(this)
         rvProductDetails = view.findViewById(R.id.rv_product_detail)
-        initRvProductDetails(args.navArgProductDetail)
+        product = args.navArgProductDetail
+        initRvProductDetails()
     }
 
-    private fun initRvProductDetails(product: Product) {
+    private fun initRvProductDetails() {
         val adapter = ProductDetailAdapter(product)
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         rvProductDetails.layoutManager = layoutManager
         rvProductDetails.adapter = adapter
     }
 
+    override fun onClick(view: View?) {
+        when(view) {
+            ivClose -> {
+                dismiss()
+            }
+            btnWishlist -> {
+                dismiss()
+                (this.parentFragment as CatalogueFragment).homeViewModel.setWishListLiveData(product)
+            }
+        }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
+            val screenHeight = resources.displayMetrics.heightPixels
+            val desiredScreenHeightInInt = (screenHeight / (1.1)).roundToInt()
+            behavior.peekHeight = desiredScreenHeightInInt
+        }
+    }
 }

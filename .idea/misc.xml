@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/layout/fragment_catalogue.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/item_basket.xml" value="0.2459051823270494" />
+        <entry key="app/src/main/res/layout/item_empty_list_msg.xml" value="0.2269021739130435" />
         <entry key="app/src/main/res/layout/item_product.xml" value="0.2647918701171875" />
         <entry key="app/src/main/res/layout/item_product_detail_primary.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_product_detail_secondary.xml" value="0.2642634073893231" />

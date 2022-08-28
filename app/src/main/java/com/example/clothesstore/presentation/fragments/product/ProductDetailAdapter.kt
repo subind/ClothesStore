@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.domain.model.ProductDetail
+import com.example.clothesstore.utils.AppUtils.Companion.inflateEmptyBlockIfLastElement
 import com.example.clothesstore.utils.isAvailable
 import com.example.clothesstore.utils.loadImageUsingUrl
 import com.example.clothesstore.utils.toProductDetails
@@ -57,6 +58,7 @@ class ProductDetailAdapter(product: Product): RecyclerView.Adapter<RecyclerView.
                 holder.apply {
                     tvTitle.text = row.secondaryInfo?.title
                     tvDescription.text = row.secondaryInfo?.body
+                    viewEmptyBlock.visibility = inflateEmptyBlockIfLastElement(position, productDetails)
                 }
             }
         }
@@ -76,6 +78,7 @@ class ProductDetailAdapter(product: Product): RecyclerView.Adapter<RecyclerView.
     class ProductDetailSecondaryInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         internal val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
         internal val tvDescription = itemView.findViewById<TextView>(R.id.tv_description)
+        internal val viewEmptyBlock = itemView.findViewById<View>(R.id.view_empty_block)
     }
 
 }
