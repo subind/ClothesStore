@@ -39,6 +39,30 @@ class CatalogueFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUi(view)
         initObservers()
+        val navController = findNavController()
+        /*val navBackStackEntry = navController.getBackStackEntry((R.id.catalogueFragment))
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                if (event == Lifecycle.Event.ON_RESUME
+                    && navBackStackEntry.savedStateHandle.contains("key")
+                ) {
+                    val result = navBackStackEntry.savedStateHandle.get<Product>("key")
+                    Log.i(TAG, "onViewCreated: $result")
+                    result?.let { homeViewModel.setWishListLiveData(it) }
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                navBackStackEntry.lifecycle.removeObserver(observer)
+            }
+        })*/
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Product>("key")?.observe(
+            viewLifecycleOwner) { result ->
+            Log.i(TAG, "onViewCreated: $result")
+            result?.let { homeViewModel.setWishListLiveData(it) }
+        }
+
     }
 
     override fun onAttach(context: Context) {
@@ -79,10 +103,10 @@ class CatalogueFragment : Fragment() {
         rvProducts.layoutManager = layoutManager
         rvProducts.adapter = adapter
         adapter.onItemClick = { product ->
-            val action = CatalogueFragmentDirections.
-            actionCatalogueFragmentToProductBottomSheetDialog(
-                product
-            )
+            val action =
+                CatalogueFragmentDirections.actionCatalogueFragmentToProductBottomSheetDialog(
+                    product
+                )
             findNavController().navigate(action)
         }
     }

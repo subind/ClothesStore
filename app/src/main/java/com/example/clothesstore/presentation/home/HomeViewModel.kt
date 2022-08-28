@@ -17,9 +17,13 @@ class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchP
     private val _productsLiveData = MutableLiveData<Resource<List<Product>>>()
     val productsLiveData = _productsLiveData
 
-    private val wishListLiveData = mutableListOf<Product>()
+    private val _wishListLiveData = MutableLiveData<List<Product>>()
+    val wishListLiveData = _wishListLiveData
+
+    var wishedProducts = mutableListOf<Product>()
 
     init {
+        //wishedProducts.clear()
         fetchProducts()
     }
 
@@ -33,7 +37,8 @@ class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchP
     }
 
     fun setWishListLiveData(wishedProduct: Product) {
-        wishListLiveData.add(wishedProduct)
+        this.wishedProducts.add(wishedProduct)
+        _wishListLiveData.value = wishedProducts
     }
 
 }

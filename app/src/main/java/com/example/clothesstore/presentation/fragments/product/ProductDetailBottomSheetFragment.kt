@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
-import com.example.clothesstore.presentation.fragments.catalogue.CatalogueFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlin.math.roundToInt
 
-class ProductDetailBottomSheetFragment: BottomSheetDialogFragment(), View.OnClickListener {
+class ProductDetailBottomSheetFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
     private lateinit var rvProductDetails: RecyclerView
     private lateinit var ivClose: ImageView
@@ -57,13 +57,13 @@ class ProductDetailBottomSheetFragment: BottomSheetDialogFragment(), View.OnClic
     }
 
     override fun onClick(view: View?) {
-        when(view) {
+        when (view) {
             ivClose -> {
                 dismiss()
             }
             btnWishlist -> {
+                findNavController().previousBackStackEntry?.savedStateHandle?.set("key", product)
                 dismiss()
-                (this.parentFragment as CatalogueFragment).homeViewModel.setWishListLiveData(product)
             }
         }
     }

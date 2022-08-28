@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Product(
+    val emptyMessage: String? = null,
+    val isAddedToBasket: Boolean = false,
     val name: String? = null,
     val image: String? = null,
     val price: Float = 0f,
@@ -18,5 +20,6 @@ data class Product(
     companion object {
         const val TITLE_SECTION: Int = 1
         const val BODY_SECTION: Int = 2
+        const val EMPTY_MSG_SECTION: Int = 3
     }
 }
