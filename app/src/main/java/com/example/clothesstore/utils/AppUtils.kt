@@ -1,15 +1,17 @@
 package com.example.clothesstore.utils
 
 import android.view.View
-import com.example.clothesstore.domain.model.ProductDetail
 
 class AppUtils {
 
     companion object {
         const val BASE_URL = "https://api.npoint.io/"
 
-        fun inflateEmptyBlockIfLastElement(position: Int, productDetails: List<ProductDetail>): Int {
-            return if(position == productDetails.size-1){
+        /**
+         * Used for divider views, that helps in preventing super-imposing of views that leads to not ideal, thicker views
+         */
+        fun inflateViewIfLastElement(position: Int, listSize: Int): Int {
+            return if(position == listSize-1){
                 View.VISIBLE
             } else {
                 View.GONE

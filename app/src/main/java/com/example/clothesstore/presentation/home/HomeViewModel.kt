@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchP
     var wishedProducts = mutableListOf<Product>()
 
     init {
-        //wishedProducts.clear()
+        wishedProducts.clear()
         fetchProducts()
     }
 

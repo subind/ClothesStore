@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.domain.model.ProductDetail
-import com.example.clothesstore.utils.AppUtils.Companion.inflateEmptyBlockIfLastElement
+import com.example.clothesstore.utils.AppUtils.Companion.inflateViewIfLastElement
 import com.example.clothesstore.utils.isAvailable
 import com.example.clothesstore.utils.loadImageUsingUrl
 import com.example.clothesstore.utils.toProductDetails
@@ -58,7 +58,7 @@ class ProductDetailAdapter(product: Product): RecyclerView.Adapter<RecyclerView.
                 holder.apply {
                     tvTitle.text = row.secondaryInfo?.title
                     tvDescription.text = row.secondaryInfo?.body
-                    viewEmptyBlock.visibility = inflateEmptyBlockIfLastElement(position, productDetails)
+                    viewEmptyBlock.visibility = inflateViewIfLastElement(position, productDetails.size)
                 }
             }
         }

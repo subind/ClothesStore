@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,29 +42,26 @@ class CatalogueFragment : Fragment() {
         initUi(view)
         initObservers()
         val navController = findNavController()
-        /*val navBackStackEntry = navController.getBackStackEntry((R.id.catalogueFragment))
+        val navBackStackEntry = navController.getBackStackEntry((R.id.catalogueFragment))
+
+        //Refer : https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_DESTROY) {
-                if (event == Lifecycle.Event.ON_RESUME
-                    && navBackStackEntry.savedStateHandle.contains("key")
-                ) {
-                    val result = navBackStackEntry.savedStateHandle.get<Product>("key")
-                    Log.i(TAG, "onViewCreated: $result")
-                    result?.let { homeViewModel.setWishListLiveData(it) }
-                }
+            if (event == Lifecycle.Event.ON_RESUME
+                && navBackStackEntry.savedStateHandle.contains("key")
+            ) {
+                val result = navBackStackEntry.savedStateHandle.get<Product>("key")
+                navBackStackEntry.savedStateHandle.remove<Product>("key")
+                Log.i(TAG, "onViewCreated: $result")
+                result?.let { homeViewModel.setWishListLiveData(it) }
             }
+
         }
+        navBackStackEntry.lifecycle.addObserver(observer)
         viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_DESTROY) {
                 navBackStackEntry.lifecycle.removeObserver(observer)
             }
-        })*/
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Product>("key")?.observe(
-            viewLifecycleOwner) { result ->
-            Log.i(TAG, "onViewCreated: $result")
-            result?.let { homeViewModel.setWishListLiveData(it) }
-        }
-
+        })
     }
 
     override fun onAttach(context: Context) {

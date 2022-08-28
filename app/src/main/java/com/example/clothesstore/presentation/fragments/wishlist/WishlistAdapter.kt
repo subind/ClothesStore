@@ -8,15 +8,22 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
+import com.example.clothesstore.utils.AppUtils.Companion.inflateViewIfLastElement
+import com.example.clothesstore.utils.loadImageUsingDrawable
 import com.example.clothesstore.utils.loadImageUsingUrl
 
-class WishlistAdapter(wishList: List<Product>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WishlistAdapter(wishList: MutableList<Product>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val wishList: List<Product>
     var onItemClick: ((Product) -> Unit)? = null
 
     init {
-        this.wishList = wishList
+        this.wishList = wishList.apply {
+            wishList.add(
+                0,
+                Product(viewHolderType = Product.TITLE_SECTION, viewHolderTitle = "Wishlist")
+            )
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -60,11 +67,13 @@ class WishlistAdapter(wishList: List<Product>) : RecyclerView.Adapter<RecyclerVi
                     tvPrice.text = row.price.toString()
                     tvQuantity.text = row.stock.toString()
                     ivAddToBasket.apply {
+                        loadImageUsingDrawable(R.drawable.icon_active_basket)
                         visibility = View.VISIBLE
                         setOnClickListener {
                             onItemClick?.invoke(row)
                         }
                     }
+                    viewDividerBottom.visibility = inflateViewIfLastElement(position, wishList.size)
                 }
             }
             is EmptyListMessageViewHolder -> {
@@ -87,6 +96,7 @@ class WishlistAdapter(wishList: List<Product>) : RecyclerView.Adapter<RecyclerVi
         internal val tvPrice = itemView.findViewById<TextView>(R.id.tv_price)
         internal val tvQuantity = itemView.findViewById<TextView>(R.id.tv_quantity)
         internal val ivAddToBasket = itemView.findViewById<ImageView>(R.id.iv_add_to_basket)
+        internal val viewDividerBottom = itemView.findViewById<View>(R.id.view_divider_bottom)
     }
 
     class EmptyListMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

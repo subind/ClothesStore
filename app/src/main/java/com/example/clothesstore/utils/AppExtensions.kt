@@ -1,11 +1,22 @@
 package com.example.clothesstore.utils
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.domain.model.ProductDetail
 import com.example.clothesstore.domain.model.ProductDetailPrimaryInfo
 import com.example.clothesstore.domain.model.ProductDetailSecondaryInfo
 import com.squareup.picasso.Picasso
+
+@SuppressLint("ObsoleteSdkInt")
+fun ImageView.loadImageUsingDrawable(drawable: Int) {
+    if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+        this.setBackgroundDrawable(ContextCompat.getDrawable(context, drawable) );
+    } else {
+        this.background = ContextCompat.getDrawable(context, drawable);
+    }
+}
 
 fun ImageView.loadImageUsingUrl(imageUri: String) {
     if (imageUri.isNotEmpty()) {
