@@ -9,7 +9,9 @@ import com.example.clothesstore.domain.use_case.FetchProducts
 import com.example.clothesstore.utils.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchProducts): ViewModel() {
 
     private lateinit var products: LiveData<Resource<List<Product>>>

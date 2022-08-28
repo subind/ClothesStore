@@ -8,7 +8,9 @@ import com.example.clothesstore.presentation.fragments.catalogue.CatalogueFragme
 import com.example.clothesstore.presentation.fragments.wishlist.WishlistFragment
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [StoreRepositoryModule::class, RetrofitModule::class])
 interface AppComponent {
 
