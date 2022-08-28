@@ -65,7 +65,6 @@ class CatalogueAdapter(products: MutableList<Product>) :
                 }
             }
         }
-
     }
 
     override fun getItemViewType(position: Int) = products[position].viewHolderType

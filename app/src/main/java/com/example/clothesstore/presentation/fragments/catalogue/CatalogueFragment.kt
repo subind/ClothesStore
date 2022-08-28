@@ -79,8 +79,11 @@ class CatalogueFragment : Fragment() {
         rvProducts.layoutManager = layoutManager
         rvProducts.adapter = adapter
         adapter.onItemClick = { product ->
-            findNavController().navigate(R.id.productBottomSheetDialog)
-            Log.i(TAG, "initRvProducts: ${product.name}")
+            val action = CatalogueFragmentDirections.
+            actionCatalogueFragmentToProductBottomSheetDialog(
+                product
+            )
+            findNavController().navigate(action)
         }
     }
 

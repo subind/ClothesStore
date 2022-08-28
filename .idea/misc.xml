@@ -14,11 +14,13 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_basket.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_bottom_sheet_product.xml" value="0.23697916666666666" />
+        <entry key="app/src/main/res/layout/fragment_bottom_sheet_product_detail.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/layout/fragment_bottom_sheet_product_detail_new.xml" value="0.22916666666666666" />
         <entry key="app/src/main/res/layout/fragment_catalogue.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/item_basket.xml" value="0.2459051823270494" />
         <entry key="app/src/main/res/layout/item_product.xml" value="0.2647918701171875" />
-        <entry key="app/src/main/res/layout/item_product_detail_primary.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/layout/item_product_detail_primary.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_product_detail_secondary.xml" value="0.2642634073893231" />
         <entry key="app/src/main/res/layout/item_title.xml" value="0.23697916666666666" />
         <entry key="app/src/main/res/layout/item_wish.xml" value="0.19610507246376813" />

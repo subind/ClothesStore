@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -68,7 +69,7 @@ dependencies {
 
     //JetPack Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version" 
 
     //Dependency injection - Dagger2
     implementation "com.google.dagger:dagger:$dagger_version"

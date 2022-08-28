@@ -6,4 +6,5 @@
     <string name="product_name_placeholder">Product name</string>
     <string name="price_placeholder">$0.00</string>
     <string name="catalogue">Catalogue</string>
+    <string name="navArgProductDetail">navArgProductDetail</string>
 </resources>

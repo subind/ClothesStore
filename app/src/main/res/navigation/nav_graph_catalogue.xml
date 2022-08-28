@@ -7,10 +7,18 @@
     <fragment
         android:id="@+id/catalogueFragment"
         android:name="com.example.clothesstore.presentation.fragments.catalogue.CatalogueFragment"
-        android:label="CatalogueFragment" />
+        android:label="CatalogueFragment">
+        <action
+            android:id="@+id/action_catalogueFragment_to_productBottomSheetDialog"
+            app:destination="@+id/productBottomSheetDialog"/>
+    </fragment>
 
     <dialog
         android:id="@+id/productBottomSheetDialog"
-        android:name="com.example.clothesstore.presentation.fragments.product.ProductBottomSheetFragment"/>
+        android:name="com.example.clothesstore.presentation.fragments.product.ProductDetailBottomSheetFragment">
+        <argument
+            android:name="navArgProductDetail"
+            app:argType="com.example.clothesstore.domain.model.Product"/>
+    </dialog>
 
 </navigation>
