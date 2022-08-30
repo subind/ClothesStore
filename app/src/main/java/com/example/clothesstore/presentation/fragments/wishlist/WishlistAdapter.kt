@@ -21,7 +21,7 @@ class WishlistAdapter(wishList: MutableList<Product>) : RecyclerView.Adapter<Rec
         this.wishList = wishList.apply {
             add(
                 0,
-                Product(viewHolderType = Product.TITLE_SECTION, viewHolderTitle = "Wishlist")
+                Product(viewHolderType = Product.TITLE_SECTION, screenTitle = "Wishlist")
             )
             if(size == 1){
                 add(Product(viewHolderType = Product.EMPTY_MSG_SECTION, emptyMessage = "Add products to your 'Wishlist'"))
@@ -61,7 +61,7 @@ class WishlistAdapter(wishList: MutableList<Product>) : RecyclerView.Adapter<Rec
         val row = wishList[position]
         when (holder) {
             is TitleViewHolder -> {
-                holder.tvTitle.text = row.viewHolderTitle
+                holder.tvTitle.text = row.screenTitle
             }
             is WishListViewHolder -> {
                 holder.apply {

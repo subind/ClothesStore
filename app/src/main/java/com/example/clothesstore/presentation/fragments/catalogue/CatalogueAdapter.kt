@@ -21,7 +21,7 @@ class CatalogueAdapter(products: MutableList<Product>) :
         this.products = products.apply {
             products.add(
                 0,
-                Product(viewHolderType = Product.TITLE_SECTION, viewHolderTitle = "Catalogue")
+                Product(viewHolderType = Product.TITLE_SECTION, screenTitle = "Catalogue")
             )
         }
     }
@@ -52,7 +52,7 @@ class CatalogueAdapter(products: MutableList<Product>) :
         val row = products[position]
         when (holder) {
             is TitleViewHolder -> {
-                holder.tvTitle.text = row.viewHolderTitle
+                holder.tvTitle.text = row.screenTitle
             }
             is ProductViewHolder -> {
                 holder.apply {
