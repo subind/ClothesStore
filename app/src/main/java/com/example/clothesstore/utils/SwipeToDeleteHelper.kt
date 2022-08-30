@@ -27,10 +27,10 @@ abstract class SwipeToDeleteHelper(
     }
 
     private var buttons: MutableList<UnderlayButton>? = null
+    private val buttonsBuffer: MutableMap<Int, MutableList<UnderlayButton>?>
     private var gestureDetector: GestureDetector? = null
     private var swipedPos = -1
     private var swipeThreshold = 0.5f
-    private val buttonsBuffer: MutableMap<Int, MutableList<UnderlayButton>?>
     private var recoverQueue: Queue<Int>? = null
     private val gestureListener: GestureDetector.SimpleOnGestureListener = object : GestureDetector.SimpleOnGestureListener() {
         override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
@@ -126,12 +126,17 @@ abstract class SwipeToDeleteHelper(
         }
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             if (dX < 0) {
+                // 'buffer' variable contains a list of UnderlayButton, which is set in WishlistFragment, with the help
+                // of abstract method instantiateUnderlayButton()
                 var buffer: MutableList<UnderlayButton>? =
                     ArrayList()
                 if (!buttonsBuffer.containsKey(pos)) {
                     instantiateUnderlayButton(viewHolder, buffer)
                     buttonsBuffer[pos] = buffer
                 } else {
+                    //OnChildDraw() gets called the 2nd time immediately, when its fully swiped open,
+                    // in this case buffer variable is set by buttonsBuffer map using position of the swiped element.
+                    // This 'buffer' is then used for drawing the button
                     buffer = buttonsBuffer[pos]
                 }
                 translationX =
@@ -169,12 +174,16 @@ abstract class SwipeToDeleteHelper(
         pos: Int,
         dX: Float
     ) {
+        // 'right' variable holds the value of the right most edge of the screen,
+        // this value is used, so that the underlying button can be drawn from this point onwards.
         var right = itemView.right.toFloat()
         val dButtonWidth = -1 * dX / buffer!!.size
         for (button in buffer) {
+            //Similar to 'right' variable, but to get the left most area until which the underlying button has to be rendered
             val left = right - dButtonWidth
             button.onDraw(
                 c,
+                //Area of the underlying button
                 RectF(
                     left,
                     itemView.top.toFloat(),
@@ -183,6 +192,9 @@ abstract class SwipeToDeleteHelper(
                 ),
                 pos
             )
+            //The value of 'left' variable is assigned to 'right' variable, because if there is another underlying button,
+            //eg: apart from delete button, say if there was edit button, the rendering of edit buttons right edge will be done
+            // to the immediate left of delete button.
             right = left
         }
     }
