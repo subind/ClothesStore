@@ -26,6 +26,7 @@ class WishlistFragment: Fragment() {
     private lateinit var rvWishes: RecyclerView
     private val TAG = "WishlistFragment"
     private var swipeHelper: SwipeToDeleteHelper? = null
+    private lateinit var adapter: WishlistAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +60,7 @@ class WishlistFragment: Fragment() {
     }
 
     private fun initRvWishes(wishes: List<Product>) {
-        val adapter = WishlistAdapter(wishes.toMutableList())
+        adapter = WishlistAdapter(wishes.toMutableList())
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         rvWishes.layoutManager = layoutManager
         rvWishes.adapter = adapter
@@ -83,10 +84,11 @@ class WishlistFragment: Fragment() {
                 underlayButtons?.add(UnderlayButton(
                     context = context!!,
                     imageResId = R.drawable.icon_delete,
-                    color = context!!.getColorFromAttr(androidx.appcompat.R.attr.colorAccent),
+                    color = context!!.getColorFromAttr(androidx.appcompat.R.attr.colorPrimary),
                     clickListener = object : UnderlayButtonClickListener {
                         override fun onClick(pos: Int) {
                             Log.i(TAG, "onClick: Deleted")
+                            adapter.deleteItemAtPosition(pos)
                         }
                     }
                 ))

@@ -1,6 +1,8 @@
 package com.example.clothesstore.utils
 
+import android.content.Context
 import android.view.View
+import androidx.annotation.AttrRes
 
 class AppUtils {
 
@@ -16,6 +18,14 @@ class AppUtils {
             } else {
                 View.GONE
             }
+        }
+
+        internal fun Context.getColorFromAttr(@AttrRes attrColor: Int
+        ): Int {
+            val typedArray = theme.obtainStyledAttributes(intArrayOf(attrColor))
+            val textColor = typedArray.getColor(0, 0)
+            typedArray.recycle()
+            return textColor
         }
 
     }

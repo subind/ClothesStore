@@ -19,10 +19,13 @@ class WishlistAdapter(wishList: MutableList<Product>) : RecyclerView.Adapter<Rec
 
     init {
         this.wishList = wishList.apply {
-            wishList.add(
+            add(
                 0,
                 Product(viewHolderType = Product.TITLE_SECTION, viewHolderTitle = "Wishlist")
             )
+            if(size == 1){
+                add(Product(viewHolderType = Product.EMPTY_MSG_SECTION, emptyMessage = "Add products to your 'Wishlist'"))
+            }
         }
     }
 
@@ -80,6 +83,10 @@ class WishlistAdapter(wishList: MutableList<Product>) : RecyclerView.Adapter<Rec
                 holder.tvMessage.text = row.emptyMessage
             }
         }
+    }
+
+    fun deleteItemAtPosition(position: Int) {
+        //TODO
     }
 
     override fun getItemCount() = wishList.size

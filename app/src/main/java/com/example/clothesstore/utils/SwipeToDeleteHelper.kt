@@ -2,13 +2,14 @@ package com.example.clothesstore.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
-import android.graphics.drawable.Drawable
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
@@ -220,26 +221,20 @@ abstract class SwipeToDeleteHelper(
             val p = Paint()
             p.color = color
             c.drawRect(rect, p)
-            drawImage(context, imageResId, c, rect, Paint())
+            drawText("Remove", c, rect, p)
             clickRegion = rect
             this.pos = pos
         }
 
-        private fun drawImage(context: Context, imageResId: Int, canvas: Canvas, rect: RectF, paint: Paint) {
-            val imageDrawable: Drawable =
-                ContextCompat.getDrawable(context, imageResId)
-                    ?: return
-            val rectWidthCenter = canvas.width - (rect.width() / 2f).toInt()
-            val rectHeightCenter = (rect.bottom - (rect.height() / 2f).toInt()).toInt()
-            val imgWidth = imageDrawable.intrinsicWidth / 3
-            val imgHeight = imageDrawable.intrinsicHeight / 3
-            imageDrawable.setBounds(
-                rectWidthCenter - imgWidth,
-                rectHeightCenter - imgHeight,
-                rectWidthCenter + imgWidth,
-                rectHeightCenter + imgHeight
-            )
-            imageDrawable.draw(canvas)
+        private fun drawText(text: String, canvas: Canvas, rect: RectF, paint: Paint) {
+            var textSize = 60F
+            paint.apply {
+                color = Color.WHITE
+                isAntiAlias = true
+                textSize = textSize
+            }
+            val textWidth = paint.measureText(text)
+            canvas.drawText(text, rect.centerX() - (textWidth/2), rect.centerY()+(textSize/2), paint)
         }
     }
 
