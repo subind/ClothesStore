@@ -2,17 +2,21 @@ package com.example.clothesstore.presentation.fragments.wishlist
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.MyApplication
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.presentation.home.HomeViewModel
+import com.example.clothesstore.utils.AppUtils.Companion.getColorFromAttr
+import com.example.clothesstore.utils.SwipeToDeleteHelper
 import javax.inject.Inject
 
 class WishlistFragment: Fragment() {
@@ -20,6 +24,8 @@ class WishlistFragment: Fragment() {
     @Inject
     lateinit var homeViewModel: HomeViewModel
     private lateinit var rvWishes: RecyclerView
+    private val TAG = "WishlistFragment"
+    private var swipeHelper: SwipeToDeleteHelper? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +66,35 @@ class WishlistFragment: Fragment() {
         adapter.onItemClick = {
             homeViewModel.setWishListLiveData(it)
         }
+
+        //Had to check whether swipeHelper was already initialised, because swipeHelper was getting invoked twice &
+        // this was causing many undesired side-effects within SwipeToDeleteHelper.
+        if(swipeHelper == null) {
+            initSwipeHelper()
+        }
+    }
+
+    private fun initSwipeHelper() {
+        swipeHelper = object : SwipeToDeleteHelper(context, rvWishes) {
+            override fun instantiateUnderlayButton(
+                viewHolder: RecyclerView.ViewHolder?,
+                underlayButtons: MutableList<UnderlayButton>?
+            ) {
+                underlayButtons?.add(UnderlayButton(
+                    context = context!!,
+                    imageResId = R.drawable.icon_delete,
+                    color = context!!.getColorFromAttr(androidx.appcompat.R.attr.colorAccent),
+                    clickListener = object : UnderlayButtonClickListener {
+                        override fun onClick(pos: Int) {
+                            Log.i(TAG, "onClick: Deleted")
+                        }
+                    }
+                ))
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHelper as SwipeToDeleteHelper)
+        itemTouchHelper.attachToRecyclerView(rvWishes)
     }
 
 }

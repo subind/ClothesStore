@@ -45,21 +45,7 @@ abstract class SwipeToDeleteHelper(
 
     @SuppressLint("ClickableViewAccessibility")
     private val onTouchListener = OnTouchListener { view, e ->
-        if (swipedPos < 0) return@OnTouchListener false
-        val point =
-            Point(e.rawX.toInt(), e.rawY.toInt())
-        val swipedViewHolder =
-            recyclerView.findViewHolderForAdapterPosition(swipedPos)
-        val swipedItem = swipedViewHolder!!.itemView
-        val rect = Rect()
-        swipedItem.getGlobalVisibleRect(rect)
-        if (e.action == MotionEvent.ACTION_DOWN || e.action == MotionEvent.ACTION_UP || e.action == MotionEvent.ACTION_MOVE) {
-            if (rect.top < point.y && rect.bottom > point.y) gestureDetector?.onTouchEvent(e) else {
-                recoverQueue?.add(swipedPos)
-                swipedPos = -1
-                recoverSwipedItem()
-            }
-        }
+        gestureDetector?.onTouchEvent(e)
         false
     }
 
@@ -88,8 +74,8 @@ abstract class SwipeToDeleteHelper(
         val pos = viewHolder.adapterPosition
         if (swipedPos != pos) recoverQueue?.add(swipedPos)
         swipedPos = pos
-        if (buttonsBuffer.containsKey(swipedPos)) buttons =
-            buttonsBuffer[swipedPos] else buttons!!.clear()
+        if (buttonsBuffer.containsKey(swipedPos))
+            buttons = buttonsBuffer[swipedPos] else buttons!!.clear()
         buttonsBuffer.clear()
         swipeThreshold =
             0.5f * buttons!!.size * BUTTON_WIDTH
@@ -217,6 +203,7 @@ abstract class SwipeToDeleteHelper(
     ) {
         private var pos = 0
         private var clickRegion: RectF? = null
+
         fun onClick(x: Float, y: Float): Boolean {
             if (clickRegion != null && clickRegion!!.contains(x, y)) {
                 clickListener.onClick(pos)
