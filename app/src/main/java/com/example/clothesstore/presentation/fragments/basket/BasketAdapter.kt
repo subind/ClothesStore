@@ -1,4 +1,4 @@
-package com.example.clothesstore.presentation.fragments.wishlist
+package com.example.clothesstore.presentation.fragments.basket
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.R
 import com.example.clothesstore.domain.model.Product
-import com.example.clothesstore.utils.AppUtils.Companion.inflateViewIfLastElement
-import com.example.clothesstore.utils.loadImageUsingDrawable
+import com.example.clothesstore.utils.AppUtils
 import com.example.clothesstore.utils.loadImageUsingUrl
 
-class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BasketAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val wishList: MutableList<Product> = mutableListOf()
-    var addToBasket: ((Product) -> Unit)? = null
+    private val basketList: MutableList<Product> = mutableListOf()
     var productToBeRemoved: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -26,7 +24,7 @@ class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 )
             }
             Product.BODY_SECTION -> {
-                WishListViewHolder(
+                BasketListViewHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.item_wish_basket, parent, false)
                 )
@@ -38,7 +36,7 @@ class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 )
             }
             else -> {
-                WishListViewHolder(
+                BasketListViewHolder(
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.item_wish_basket, parent, false)
                 )
@@ -47,25 +45,25 @@ class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val row = wishList[position]
+        val row = basketList[position]
         when (holder) {
             is TitleViewHolder -> {
                 holder.tvTitle.text = row.screenTitle
             }
-            is WishListViewHolder -> {
+            is BasketListViewHolder -> {
                 holder.apply {
                     ivProduct.loadImageUsingUrl(row.image ?: "")
                     tvProductName.text = row.name
                     tvPrice.text = row.price.toString()
-                    tvQuantity.visibility = View.GONE
-                    ivAddToBasket.apply {
-                        loadImageUsingDrawable(R.drawable.icon_active_basket)
+                    tvQuantity.apply {
                         visibility = View.VISIBLE
-                        setOnClickListener {
-                            addToBasket?.invoke(row)
-                        }
+                        text = row.cartQuantity.toString()
                     }
-                    viewDividerBottom.visibility = inflateViewIfLastElement(position, wishList.size)
+                    ivAddToBasket.apply {
+                        visibility = View.GONE
+                    }
+                    viewDividerBottom.visibility =
+                        AppUtils.inflateViewIfLastElement(position, basketList.size)
                 }
             }
             is EmptyListMessageViewHolder -> {
@@ -74,30 +72,26 @@ class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    /**
-     * Remove the element from _wishListLiveData in HomeViewModel, &
-     * observe the changes made on it in the WishlistFragment, then update the adapter with this new list
-     */
     fun deleteItemAtPosition(position: Int) {
-        val product = wishList[position]
+        val product = basketList[position]
         productToBeRemoved?.invoke(product)
     }
 
-    fun updateWishList(wishes: List<Product>) {
-        wishList.clear()
-        wishList.addAll(wishes)
+    fun updateBasketList(products: List<Product>) {
+        basketList.clear()
+        basketList.addAll(products)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = wishList.size
+    override fun getItemCount() = basketList.size
 
-    override fun getItemViewType(position: Int) = wishList[position].viewHolderType
+    override fun getItemViewType(position: Int) = basketList[position].viewHolderType
 
     class TitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
     }
 
-    class WishListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class BasketListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val ivProduct = itemView.findViewById<ImageView>(R.id.iv_product)
         internal val tvProductName = itemView.findViewById<TextView>(R.id.tv_product_name)
         internal val tvPrice = itemView.findViewById<TextView>(R.id.tv_price)
@@ -111,6 +105,3 @@ class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
 }
-
-
-

@@ -54,7 +54,6 @@ class CatalogueFragment : Fragment() {
                 Log.i(TAG, "onViewCreated: $result")
                 result?.let { homeViewModel.addToWishListLiveData(it) }
             }
-
         }
         navBackStackEntry.lifecycle.addObserver(observer)
         viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->

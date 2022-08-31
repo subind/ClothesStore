@@ -91,7 +91,7 @@ fun MutableList<Product>.ifDuplicatePresentThenIncrementCartQuantityElseAdd(prod
 fun MutableList<Product>.ifDuplicatePresentThenDecrementCartQuantityElseRemove(productToBeRemoved: Product) {
     var notFoundSameProduct = true
     this.forEach { productInCart ->
-        if (productInCart.productId.equals(productToBeRemoved.productId)) {
+        if (productInCart.productId.equals(productToBeRemoved.productId) && productInCart.cartQuantity > 1) {
             productInCart.cartQuantity -= 1
             notFoundSameProduct = false
         }
