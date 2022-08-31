@@ -23,8 +23,8 @@ data class Product(
     val isAddedToBasket: Boolean = false,
     //'isWishListed' helps us in indicating whether a specific product was added to the wishlist by the user.
     val isWishListed: Boolean = false,
-    //'spProductQtyInCart' helps in keeping track of the quantity of the same product.
-    val spProductQtyInCart: Int = 0
+    //'cartQuantity' helps in keeping track of the quantity of the same/specific product.
+    var cartQuantity: Int = 1
 ): Parcelable {
     companion object {
         //ViewHolder type's

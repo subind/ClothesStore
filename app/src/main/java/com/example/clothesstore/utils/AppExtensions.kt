@@ -11,8 +11,8 @@ import com.squareup.picasso.Picasso
 
 @SuppressLint("ObsoleteSdkInt")
 fun ImageView.loadImageUsingDrawable(drawable: Int) {
-    if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-        this.setBackgroundDrawable(ContextCompat.getDrawable(context, drawable) );
+    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+        this.setBackgroundDrawable(ContextCompat.getDrawable(context, drawable));
     } else {
         this.background = ContextCompat.getDrawable(context, drawable);
     }
@@ -25,7 +25,7 @@ fun ImageView.loadImageUsingUrl(imageUri: String) {
 }
 
 fun Int.isAvailable(): String {
-    return if(this > 0){
+    return if (this > 0) {
         "In Stock"
     } else {
         "Out Of Stock"
@@ -74,3 +74,17 @@ fun Product.toProductDetails(): List<ProductDetail> {
     )
     return productDetails
 }
+
+fun MutableList<Product>.ifDuplicatePresentThenIncrementCartQuantity(productToBeAdded: Product) {
+    var notFoundSameProduct = true
+    this.forEach { productInCart ->
+        if (productInCart.productId.equals(productToBeAdded.productId)) {
+            productInCart.cartQuantity += 1
+            notFoundSameProduct = false
+        }
+    }
+    if (notFoundSameProduct || this.isEmpty()) {
+        this.add(productToBeAdded)
+    }
+}
+

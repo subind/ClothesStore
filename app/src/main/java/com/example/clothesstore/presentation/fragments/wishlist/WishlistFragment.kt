@@ -93,9 +93,8 @@ class WishlistFragment: Fragment() {
     }
 
     private fun initCallBacks() {
-        adapter?.onItemClick = {
-            //TODO
-            //homeViewModel.addToBasketLiveData(it)
+        adapter?.addToBasket = {
+            homeViewModel.addToBasketLiveData(it)
         }
 
         adapter?.productToBeRemoved = {

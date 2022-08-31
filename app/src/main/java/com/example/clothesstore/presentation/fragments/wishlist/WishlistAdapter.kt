@@ -15,7 +15,7 @@ import com.example.clothesstore.utils.loadImageUsingUrl
 class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val wishList: MutableList<Product> = mutableListOf()
-    var onItemClick: ((Product) -> Unit)? = null
+    var addToBasket: ((Product) -> Unit)? = null
     var productToBeRemoved: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -62,7 +62,7 @@ class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         loadImageUsingDrawable(R.drawable.icon_active_basket)
                         visibility = View.VISIBLE
                         setOnClickListener {
-                            onItemClick?.invoke(row)
+                            addToBasket?.invoke(row)
                         }
                     }
                     viewDividerBottom.visibility = inflateViewIfLastElement(position, wishList.size)
