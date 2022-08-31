@@ -95,6 +95,8 @@ class WishlistFragment: Fragment() {
     private fun initCallBacks() {
         adapter?.addToBasket = {
             homeViewModel.addToBasketLiveData(it)
+            //Delete the item Iin wishlist that was added to cart
+            adapter?.deleteItemAtPosition(it)
         }
 
         adapter?.productToBeRemoved = {

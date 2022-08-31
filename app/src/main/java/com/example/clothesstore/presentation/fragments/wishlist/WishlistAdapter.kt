@@ -74,12 +74,12 @@ class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    /**
-     * Remove the element from _wishListLiveData in HomeViewModel, &
-     * observe the changes made on it in the WishlistFragment, then update the adapter with this new list
-     */
     fun deleteItemAtPosition(position: Int) {
         val product = wishList[position]
+        productToBeRemoved?.invoke(product)
+    }
+
+    fun deleteItemAtPosition(product: Product) {
         productToBeRemoved?.invoke(product)
     }
 
