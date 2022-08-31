@@ -75,7 +75,7 @@ fun Product.toProductDetails(): List<ProductDetail> {
     return productDetails
 }
 
-fun MutableList<Product>.ifDuplicatePresentThenIncrementCartQuantity(productToBeAdded: Product) {
+fun MutableList<Product>.ifDuplicatePresentThenIncrementCartQuantityElseAdd(productToBeAdded: Product) {
     var notFoundSameProduct = true
     this.forEach { productInCart ->
         if (productInCart.productId.equals(productToBeAdded.productId)) {
@@ -85,6 +85,19 @@ fun MutableList<Product>.ifDuplicatePresentThenIncrementCartQuantity(productToBe
     }
     if (notFoundSameProduct || this.isEmpty()) {
         this.add(productToBeAdded)
+    }
+}
+
+fun MutableList<Product>.ifDuplicatePresentThenDecrementCartQuantityElseRemove(productToBeRemoved: Product) {
+    var notFoundSameProduct = true
+    this.forEach { productInCart ->
+        if (productInCart.productId.equals(productToBeRemoved.productId)) {
+            productInCart.cartQuantity -= 1
+            notFoundSameProduct = false
+        }
+    }
+    if (notFoundSameProduct) {
+        this.remove(productToBeRemoved)
     }
 }
 

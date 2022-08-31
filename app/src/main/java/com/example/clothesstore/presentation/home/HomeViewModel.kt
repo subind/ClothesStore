@@ -1,13 +1,13 @@
 package com.example.clothesstore.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.domain.use_case.FetchProducts
 import com.example.clothesstore.utils.Resource
-import com.example.clothesstore.utils.ifDuplicatePresentThenIncrementCartQuantity
+import com.example.clothesstore.utils.ifDuplicatePresentThenDecrementCartQuantityElseRemove
+import com.example.clothesstore.utils.ifDuplicatePresentThenIncrementCartQuantityElseAdd
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -49,14 +49,18 @@ class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchP
         }?.toList()
     }
 
-    /**
-     * Make sure to check the cart quantity doesn't exceed the available stock
-     */
+    //Todo: Make sure to check the cart quantity doesn't exceed the available stock
     fun addToBasketLiveData(product: Product) {
         _basketListLiveData.value = _basketListLiveData.value?.toMutableList()?.apply {
-            ifDuplicatePresentThenIncrementCartQuantity(product)
+            ifDuplicatePresentThenIncrementCartQuantityElseAdd(product)
         }?.toList()
-        Log.i(TAG, "addToBasketLiveData: ${_basketListLiveData.value}")
     }
+
+    fun deleteFromBasketLiveData(product: Product) {
+        _basketListLiveData.value = _basketListLiveData.value?.toMutableList()?.apply {
+            ifDuplicatePresentThenDecrementCartQuantityElseRemove(product)
+        }?.toList()
+    }
+
 
 }
