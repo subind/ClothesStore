@@ -12,22 +12,11 @@ import com.example.clothesstore.utils.AppUtils.Companion.inflateViewIfLastElemen
 import com.example.clothesstore.utils.loadImageUsingDrawable
 import com.example.clothesstore.utils.loadImageUsingUrl
 
-class WishlistAdapter(wishList: MutableList<Product>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WishlistAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val wishList: List<Product>
+    private val wishList: MutableList<Product> = mutableListOf()
     var onItemClick: ((Product) -> Unit)? = null
-
-    init {
-        this.wishList = wishList.apply {
-            add(
-                0,
-                Product(viewHolderType = Product.TITLE_SECTION, screenTitle = "Wishlist")
-            )
-            if(size == 1){
-                add(Product(viewHolderType = Product.EMPTY_MSG_SECTION, emptyMessage = "Add products to your 'Wishlist'"))
-            }
-        }
-    }
+    var productToBeRemoved: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -85,8 +74,19 @@ class WishlistAdapter(wishList: MutableList<Product>) : RecyclerView.Adapter<Rec
         }
     }
 
+    /**
+     * Remove the element from _wishListLiveData in HomeViewModel, &
+     * observe the changes made on it in the WishlistFragment, then update the adapter with this new list
+     */
     fun deleteItemAtPosition(position: Int) {
-        //TODO
+        val product = wishList[position]
+        productToBeRemoved?.invoke(product)
+    }
+
+    fun updateWishList(wishes: List<Product>) {
+        wishList.clear()
+        wishList.addAll(wishes)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = wishList.size

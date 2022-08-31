@@ -14,33 +14,37 @@ import javax.inject.Singleton
 @Singleton
 class HomeViewModel @Inject constructor(private val fetchProductsUseCase: FetchProducts): ViewModel() {
 
-    private lateinit var products: LiveData<Resource<List<Product>>>
+    private lateinit var productsInCatalogue: LiveData<Resource<List<Product>>>
 
     private val _productsLiveData = MutableLiveData<Resource<List<Product>>>()
     val productsLiveData = _productsLiveData
 
-    private val _wishListLiveData = MutableLiveData<List<Product>>()
+    private val _wishListLiveData = MutableLiveData<List<Product>>(emptyList())
     val wishListLiveData = _wishListLiveData
 
-    var wishedProducts = mutableListOf<Product>()
-
     init {
-        wishedProducts.clear()
         fetchProducts()
     }
 
     private fun fetchProducts() {
         viewModelScope.launch {
-            products =  fetchProductsUseCase.fetch()
-            products.observeForever {
+            productsInCatalogue =  fetchProductsUseCase.fetch()
+            productsInCatalogue.observeForever {
                 productsLiveData.value = it
             }
         }
     }
 
-    fun setWishListLiveData(wishedProduct: Product) {
-        this.wishedProducts.add(wishedProduct)
-        _wishListLiveData.value = wishedProducts
+    fun addToWishListLiveData(wishedProduct: Product) {
+        _wishListLiveData.value = _wishListLiveData.value?.toMutableList()?.apply {
+            add(wishedProduct)
+        }?.toList()
+    }
+
+    fun deleteFromWishListLiveData(wishedProduct: Product) {
+        _wishListLiveData.value = _wishListLiveData.value?.toMutableList()?.apply {
+            remove(wishedProduct)
+        }?.toList()
     }
 
 }

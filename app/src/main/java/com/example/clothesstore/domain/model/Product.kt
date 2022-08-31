@@ -28,6 +28,7 @@ data class Product(
 ): Parcelable {
     companion object {
         //ViewHolder type's
+        //TODO: Look into collapsing toolbar for title section, instead of it being part of recycler view
         const val TITLE_SECTION: Int = 1
         const val BODY_SECTION: Int = 2
         const val EMPTY_MSG_SECTION: Int = 3

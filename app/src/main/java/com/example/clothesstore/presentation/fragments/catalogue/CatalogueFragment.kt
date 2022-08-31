@@ -52,7 +52,7 @@ class CatalogueFragment : Fragment() {
                 val result = navBackStackEntry.savedStateHandle.get<Product>("key")
                 navBackStackEntry.savedStateHandle.remove<Product>("key")
                 Log.i(TAG, "onViewCreated: $result")
-                result?.let { homeViewModel.setWishListLiveData(it) }
+                result?.let { homeViewModel.addToWishListLiveData(it) }
             }
 
         }

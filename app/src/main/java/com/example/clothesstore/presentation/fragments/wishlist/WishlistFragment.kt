@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clothesstore.MyApplication
 import com.example.clothesstore.R
-import com.example.clothesstore.domain.model.Product
 import com.example.clothesstore.presentation.home.HomeViewModel
 import com.example.clothesstore.utils.AppUtils.Companion.getColorFromAttr
 import com.example.clothesstore.utils.SwipeToDeleteHelper
@@ -26,7 +25,7 @@ class WishlistFragment: Fragment() {
     private lateinit var rvWishes: RecyclerView
     private val TAG = "WishlistFragment"
     private var swipeHelper: SwipeToDeleteHelper? = null
-    private lateinit var adapter: WishlistAdapter
+    private var adapter: WishlistAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +40,8 @@ class WishlistFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUi(view)
         initObservers()
-        initRvWishes(homeViewModel.wishedProducts)
+        initRvWishes()
+        initCallBacks()
     }
 
     override fun onAttach(context: Context) {
@@ -54,25 +54,18 @@ class WishlistFragment: Fragment() {
     }
 
     private fun initObservers() {
-        homeViewModel.wishListLiveData.observe(viewLifecycleOwner, Observer {
-            initRvWishes(it)
+        homeViewModel.wishListLiveData.observe(viewLifecycleOwner, Observer { product ->
+            product?.let { adapter?.updateWishList(it) }
         })
     }
 
-    private fun initRvWishes(wishes: List<Product>) {
-        adapter = WishlistAdapter(wishes.toMutableList())
+    private fun initRvWishes() {
+        adapter = WishlistAdapter()
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         rvWishes.layoutManager = layoutManager
         rvWishes.adapter = adapter
-        adapter.onItemClick = {
-            homeViewModel.setWishListLiveData(it)
-        }
 
-        //Had to check whether swipeHelper was already initialised, because swipeHelper was getting invoked twice &
-        // this was causing many undesired side-effects within SwipeToDeleteHelper.
-        if(swipeHelper == null) {
-            initSwipeHelper()
-        }
+        initSwipeHelper()
     }
 
     private fun initSwipeHelper() {
@@ -88,7 +81,7 @@ class WishlistFragment: Fragment() {
                     clickListener = object : UnderlayButtonClickListener {
                         override fun onClick(pos: Int) {
                             Log.i(TAG, "onClick: Deleted")
-                            adapter.deleteItemAtPosition(pos)
+                            adapter?.deleteItemAtPosition(pos)
                         }
                     }
                 ))
@@ -97,6 +90,17 @@ class WishlistFragment: Fragment() {
 
         val itemTouchHelper = ItemTouchHelper(swipeHelper as SwipeToDeleteHelper)
         itemTouchHelper.attachToRecyclerView(rvWishes)
+    }
+
+    private fun initCallBacks() {
+        adapter?.onItemClick = {
+            //TODO
+            //homeViewModel.addToBasketLiveData(it)
+        }
+
+        adapter?.productToBeRemoved = {
+            homeViewModel.deleteFromWishListLiveData(it)
+        }
     }
 
 }
