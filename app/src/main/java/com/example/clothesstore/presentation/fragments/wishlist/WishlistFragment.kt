@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,10 +21,10 @@ import javax.inject.Inject
 
 class WishlistFragment: Fragment() {
 
-    @Inject
-    lateinit var homeViewModel: HomeViewModel
-    private lateinit var rvWishes: RecyclerView
     private val TAG = "WishlistFragment"
+    @Inject lateinit var homeViewModel: HomeViewModel
+    private lateinit var rvWishes: RecyclerView
+    private lateinit var tvEmptyWishlist: TextView
     private var swipeHelper: SwipeToDeleteHelper? = null
     private var adapter: WishlistAdapter? = null
 
@@ -51,11 +52,19 @@ class WishlistFragment: Fragment() {
 
     private fun initUi(view: View) {
         rvWishes = view.findViewById<RecyclerView>(R.id.rv_wishes)
+        tvEmptyWishlist = view.findViewById<TextView>(R.id.tv_empty_wishlist)
     }
 
     private fun initObservers() {
-        homeViewModel.wishListLiveData.observe(viewLifecycleOwner, Observer { product ->
-            product?.let { adapter?.updateWishList(it) }
+        homeViewModel.wishListLiveData.observe(viewLifecycleOwner, Observer { products ->
+            if(products.isEmpty()){
+                tvEmptyWishlist.visibility = View.VISIBLE
+                rvWishes.visibility = View.GONE
+            }else {
+                rvWishes.visibility = View.VISIBLE
+                tvEmptyWishlist.visibility = View.GONE
+                products?.let { adapter?.updateWishList(it) }
+            }
         })
     }
 

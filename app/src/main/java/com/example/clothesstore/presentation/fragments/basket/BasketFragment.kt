@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -22,6 +23,7 @@ class BasketFragment: Fragment() {
     @Inject
     lateinit var homeViewModel: HomeViewModel
     private lateinit var rvBasket: RecyclerView
+    private lateinit var tvEmptyBasketList: TextView
     private var adapter: BasketAdapter? = null
     private var swipeHelper: SwipeToDeleteHelper? = null
 
@@ -49,11 +51,19 @@ class BasketFragment: Fragment() {
 
     private fun initUi(view: View) {
         rvBasket = view.findViewById<RecyclerView>(R.id.rv_basket)
+        tvEmptyBasketList = view.findViewById<TextView>(R.id.tv_empty_basket_list)
     }
 
     private fun initObservers() {
-        homeViewModel.basketListLiveData.observe(viewLifecycleOwner, Observer { product ->
-            product?.let { adapter?.updateBasketList(it) }
+        homeViewModel.basketListLiveData.observe(viewLifecycleOwner, Observer { products ->
+            if(products.isEmpty()){
+                tvEmptyBasketList.visibility = View.VISIBLE
+                rvBasket.visibility = View.GONE
+            }else {
+                rvBasket.visibility = View.VISIBLE
+                tvEmptyBasketList.visibility = View.GONE
+                products?.let { adapter?.updateBasketList(it) }
+            }
         })
     }
 
