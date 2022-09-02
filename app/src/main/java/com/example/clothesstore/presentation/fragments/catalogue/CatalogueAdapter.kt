@@ -22,42 +22,20 @@ class CatalogueAdapter(products: MutableList<Product>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            Product.TITLE_SECTION -> {
-                TitleViewHolder(
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false)
-                )
-            }
-            Product.BODY_SECTION -> {
-                ProductViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_product, parent, false)
-                )
-            }
-            else -> {
-                ProductViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_product, parent, false)
-                )
-            }
-        }
+        return ProductViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_product, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val row = products[position]
-        when (holder) {
-            is TitleViewHolder -> {
-                holder.tvTitle.text = row.screenTitle
-            }
-            is ProductViewHolder -> {
-                holder.apply {
-                    ivProduct.loadImageUsingUrl(row.image ?: "")
-                    tvProductName.text = row.name
-                    tvProductPrice.text = row.price.toString()
-                    cvProduct.setOnClickListener {
-                        onItemClick?.invoke(row)
-                    }
-                }
+        (holder as ProductViewHolder).apply {
+            ivProduct.loadImageUsingUrl(row.image ?: "")
+            tvProductName.text = row.name
+            tvProductPrice.text = row.price.toString()
+            cvProduct.setOnClickListener {
+                onItemClick?.invoke(row)
             }
         }
     }
@@ -71,10 +49,6 @@ class CatalogueAdapter(products: MutableList<Product>) :
         internal val tvProductPrice = itemView.findViewById<TextView>(R.id.tv_product_price)
         internal val ivProduct = itemView.findViewById<ImageView>(R.id.iv_product)
         internal val cvProduct = itemView.findViewById<CardView>(R.id.cv_product)
-    }
-
-    class TitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
     }
 
 }

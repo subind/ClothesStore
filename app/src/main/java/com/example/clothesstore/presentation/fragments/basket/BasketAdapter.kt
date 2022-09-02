@@ -17,58 +17,27 @@ class BasketAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var productToBeRemoved: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
-            Product.TITLE_SECTION -> {
-                TitleViewHolder(
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_title, parent, false)
-                )
-            }
-            Product.BODY_SECTION -> {
-                BasketListViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_wish_basket, parent, false)
-                )
-            }
-            Product.EMPTY_MSG_SECTION -> {
-                EmptyListMessageViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_empty_list_msg, parent, false)
-                )
-            }
-            else -> {
-                BasketListViewHolder(
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_wish_basket, parent, false)
-                )
-            }
-        }
+        return BasketListViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_wish_basket, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val row = basketList[position]
-        when (holder) {
-            is TitleViewHolder -> {
-                holder.tvTitle.text = row.screenTitle
+        (holder as BasketListViewHolder).apply {
+            ivProduct.loadImageUsingUrl(row.image ?: "")
+            tvProductName.text = row.name
+            tvPrice.text = row.price.toString()
+            tvQuantity.apply {
+                visibility = View.VISIBLE
+                text = row.cartQuantity.toString()
             }
-            is BasketListViewHolder -> {
-                holder.apply {
-                    ivProduct.loadImageUsingUrl(row.image ?: "")
-                    tvProductName.text = row.name
-                    tvPrice.text = row.price.toString()
-                    tvQuantity.apply {
-                        visibility = View.VISIBLE
-                        text = row.cartQuantity.toString()
-                    }
-                    ivAddToBasket.apply {
-                        visibility = View.GONE
-                    }
-                    viewDividerBottom.visibility =
-                        AppUtils.inflateViewIfLastElement(position, basketList.size)
-                }
+            ivAddToBasket.apply {
+                visibility = View.GONE
             }
-            is EmptyListMessageViewHolder -> {
-                holder.tvMessage.text = row.emptyMessage
-            }
+            viewDividerBottom.visibility =
+                AppUtils.inflateViewIfLastElement(position, basketList.size)
         }
     }
 
@@ -87,10 +56,6 @@ class BasketAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int) = basketList[position].viewHolderType
 
-    class TitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal val tvTitle = itemView.findViewById<TextView>(R.id.tv_title)
-    }
-
     class BasketListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val ivProduct = itemView.findViewById<ImageView>(R.id.iv_product)
         internal val tvProductName = itemView.findViewById<TextView>(R.id.tv_product_name)
@@ -98,10 +63,6 @@ class BasketAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         internal val tvQuantity = itemView.findViewById<TextView>(R.id.tv_quantity)
         internal val ivAddToBasket = itemView.findViewById<ImageView>(R.id.iv_add_to_basket)
         internal val viewDividerBottom = itemView.findViewById<View>(R.id.view_divider_bottom)
-    }
-
-    class EmptyListMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal val tvMessage = itemView.findViewById<TextView>(R.id.tv_message)
     }
 
 }
