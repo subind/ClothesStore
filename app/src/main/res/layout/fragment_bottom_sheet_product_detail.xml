@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minHeight="500dp">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_close"
@@ -40,39 +39,12 @@
         android:background="@android:color/darker_gray"
         android:layout_marginTop="15dp"/>
 
-    <include
-        android:id="@+id/included_item_product_detail_primary"
-        layout="@layout/item_product_detail_primary"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_product_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider_view_title" />
-
-    <include
-        android:id="@+id/included_item_product_detail_secondary_1"
-        layout="@layout/item_product_detail_secondary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/included_item_product_detail_primary"/>
-
-    <include
-        android:id="@+id/included_item_product_detail_secondary_2"
-        layout="@layout/item_product_detail_secondary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/included_item_product_detail_secondary_1"/>
-
-    <include
-        android:id="@+id/included_item_product_detail_secondary_3"
-        layout="@layout/item_product_detail_secondary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/cl_btn_bg_view"
-        app:layout_constraintTop_toBottomOf="@+id/included_item_product_detail_secondary_2"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginBottom="100dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/divider_view_title"
+        app:layout_constraintBottom_toTopOf="@+id/cl_btn_bg_view"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_btn_bg_view"

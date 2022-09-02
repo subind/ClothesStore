@@ -47,12 +47,16 @@ class CatalogueFragment : Fragment() {
         //Refer : https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME
-                && navBackStackEntry.savedStateHandle.contains("key")
+                && navBackStackEntry.savedStateHandle.contains(getString(R.string.key_wishlist))
             ) {
-                val result = navBackStackEntry.savedStateHandle.get<Product>("key")
-                navBackStackEntry.savedStateHandle.remove<Product>("key")
-                Log.i(TAG, "onViewCreated: $result")
+                val result = navBackStackEntry.savedStateHandle.get<Product>(getString(R.string.key_wishlist))
+                navBackStackEntry.savedStateHandle.remove<Product>(getString(R.string.key_wishlist))
                 result?.let { homeViewModel.addToWishListLiveData(it) }
+            }else if(event == Lifecycle.Event.ON_RESUME
+                && navBackStackEntry.savedStateHandle.contains(getString(R.string.key_add_to_cart))) {
+                val result = navBackStackEntry.savedStateHandle.get<Product>(getString(R.string.key_add_to_cart))
+                navBackStackEntry.savedStateHandle.remove<Product>(getString(R.string.key_add_to_cart))
+                result?.let { homeViewModel.addToBasketLiveData(it) }
             }
         }
         navBackStackEntry.lifecycle.addObserver(observer)

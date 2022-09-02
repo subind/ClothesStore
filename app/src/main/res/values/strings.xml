@@ -11,4 +11,6 @@
     <string name="navArgProductDetail">navArgProductDetail</string>
     <string name="empty_wishlist">Add products to your \'Wishlist\'</string>
     <string name="empty_basket_list">Add products to your \'Basket\'</string>
+    <string name="key_add_to_cart">addToCartKey</string>
+    <string name="key_wishlist">wishListKey</string>
 </resources>

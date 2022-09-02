@@ -22,6 +22,7 @@ class ProductDetailBottomSheetFragment : BottomSheetDialogFragment(), View.OnCli
     private lateinit var rvProductDetails: RecyclerView
     private lateinit var ivClose: ImageView
     private lateinit var btnWishlist: Button
+    private lateinit var btnAddToCart: Button
     private lateinit var product: Product
     private val args by navArgs<ProductDetailBottomSheetFragmentArgs>()
 
@@ -31,7 +32,7 @@ class ProductDetailBottomSheetFragment : BottomSheetDialogFragment(), View.OnCli
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_bottom_sheet_product_detail_new, container, false)
+        return inflater.inflate(R.layout.fragment_bottom_sheet_product_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,6 +43,8 @@ class ProductDetailBottomSheetFragment : BottomSheetDialogFragment(), View.OnCli
     private fun initUi(view: View) {
         btnWishlist = view.findViewById(R.id.btn_wishlist)
         btnWishlist.setOnClickListener(this)
+        btnAddToCart = view.findViewById(R.id.btn_add_to_cart)
+        btnAddToCart.setOnClickListener(this)
         ivClose = view.findViewById(R.id.iv_close)
         ivClose.setOnClickListener(this)
         rvProductDetails = view.findViewById(R.id.rv_product_detail)
@@ -62,7 +65,11 @@ class ProductDetailBottomSheetFragment : BottomSheetDialogFragment(), View.OnCli
                 dismiss()
             }
             btnWishlist -> {
-                findNavController().previousBackStackEntry?.savedStateHandle?.set("key", product)
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(getString(R.string.key_wishlist), product)
+                dismiss()
+            }
+            btnAddToCart -> {
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(getString(R.string.key_add_to_cart), product)
                 dismiss()
             }
         }
