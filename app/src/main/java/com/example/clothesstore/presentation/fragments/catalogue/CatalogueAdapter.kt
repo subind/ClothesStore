@@ -18,12 +18,7 @@ class CatalogueAdapter(products: MutableList<Product>) :
     var onItemClick: ((Product) -> Unit)? = null
 
     init {
-        this.products = products.apply {
-            products.add(
-                0,
-                Product(viewHolderType = Product.TITLE_SECTION, screenTitle = "Catalogue")
-            )
-        }
+        this.products = products
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

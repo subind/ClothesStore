@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ClothesStore</string>
     <string name="catalogue_all_caps">CATALOGUE</string>
+    <string name="catalogue_camel_case">Catalogue</string>
     <string name="wishlist_all_caps">WISHLIST</string>
     <string name="wishlist_camel_case">Wishlist</string>
     <string name="basket_all_caps">BASKET</string>
